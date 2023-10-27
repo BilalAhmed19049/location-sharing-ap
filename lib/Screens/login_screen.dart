@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:location_sharing_app/Screens/signup_screen.dart';
 
 import '../Widgets/dynamic_elevated_button.dart';
 import '../Widgets/dynamic_textfield.dart';
@@ -38,6 +39,11 @@ class LoginScreen extends StatelessWidget {
               CustomTextField(
                 labeltext: 'Email',
                 controller: emailNameController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter valid email';
+                  }
+                },
               ),
               SizedBox(
                 height: 10,
@@ -51,12 +57,43 @@ class LoginScreen extends StatelessWidget {
               ),
               DynamicElevatedButton(
                 text: 'LOGIN',
-                onPress: () {},
+                onPress: () {
+                  if (Form.of(context)!.validate()) {
+                    print('please fill fields properly');
+                  }
+                },
+              ),
+              SizedBox(
+                height: 20,
               ),
               TextButton(
-                onPressed: () {},
-                child: Text('Do not have account! Create here'),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SignupScreen()),
+                  );
+                },
+                child: RichText(
+                  text: const TextSpan(
+                    text: 'Do not have account! ',
+                    style: TextStyle(
+                      color: Colors.black38,
+                      fontSize: 17, // Set the text color to white
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: 'SignUp',
+                        style: TextStyle(
+                          color: Colors
+                              .deepPurple, // Set the text color to deep purple
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               )
+
+
             ],
           ),
         ),
