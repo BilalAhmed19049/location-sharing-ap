@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:location_sharing_app/Screens/signup_screen.dart';
 
@@ -7,10 +8,14 @@ import '../Widgets/dynamic_textfield.dart';
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
 
-  TextEditingController firstNameController = TextEditingController();
-  TextEditingController lastNameController = TextEditingController();
-  TextEditingController emailNameController = TextEditingController();
-  TextEditingController passwordNameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,30 +43,21 @@ class LoginScreen extends StatelessWidget {
                   )),
               CustomTextField(
                 labeltext: 'Email',
-                controller: emailNameController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter valid email';
-                  }
-                },
+                controller: emailController,
               ),
               SizedBox(
                 height: 10,
               ),
               CustomTextField(
                 labeltext: 'Password',
-                controller: passwordNameController,
+                controller: passwordController,
               ),
               SizedBox(
                 height: 10,
               ),
               DynamicElevatedButton(
                 text: 'LOGIN',
-                onPress: () {
-                  if (Form.of(context)!.validate()) {
-                    print('please fill fields properly');
-                  }
-                },
+                onPress: signIn,
               ),
               SizedBox(
                 height: 20,
@@ -69,9 +65,10 @@ class LoginScreen extends StatelessWidget {
               TextButton(
                 onPressed: () {
                   Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SignupScreen()),
-                  );
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SignupScreen(),
+                      ));
                 },
                 child: RichText(
                   text: const TextSpan(
@@ -92,12 +89,20 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
               )
-
-
             ],
           ),
         ),
       ),
     );
+  }
+
+  Future signIn() async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailController.text.trim(),
+          password: passwordController.text.trim());
+    } on FirebaseAuthException catch (error) {
+      print(error);
+    }
   }
 }
