@@ -34,17 +34,17 @@ class SignupScreen extends StatelessWidget {
                   child: Image.asset(
                     'assets/3d-render-secure-login-password-illustration.jpg',
                   )),
-              // CustomTextField(
-              //   labeltext: 'First Name',
-              //   controller: firstNameController,
-              // ),
-              // SizedBox(
-              //   height: 10,
-              // ),
-              // CustomTextField(
-              //   labeltext: 'Last Name',
-              //   controller: lastNameController,
-              // ),
+              CustomTextField(
+                labeltext: 'First Name',
+                controller: firstNameController,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              CustomTextField(
+                labeltext: 'Last Name',
+                controller: lastNameController,
+              ),
               SizedBox(
                 height: 10,
               ),
@@ -139,9 +139,20 @@ class SignupScreen extends StatelessWidget {
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
+
+      User? user = FirebaseAuth.instance.currentUser;
+      await user?.updateDisplayName(
+          "${firstNameController.text} ${lastNameController.text}");
+      await user?.reload();
+      user = FirebaseAuth.instance.currentUser; // Refresh user data
+
+      // Print the updated user data
+      print("User Name: ${user?.displayName}");
+      print("User Email: ${user?.email}");
     } on FirebaseAuthException catch (error) {
       print(error);
     }
+
     // Navigator.push(
     //     context,
     //     MaterialPageRoute(builder: (context) => SignupScreen(),

@@ -17,7 +17,7 @@ class _AuthPageState extends State<AuthPage> {
     return isLogin ? LoginScreen() : SignupScreen();
   }
 
-  void toggle() => setState(() {
-        isLogin = !isLogin;
-      });
+// void toggle() => setState(() {
+//       isLogin = !isLogin;
+//     });
 }
