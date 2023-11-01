@@ -1,11 +1,9 @@
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart' as loc;
 import 'package:permission_handler/permission_handler.dart';
-
 import 'all_users_location.dart';
 import 'my_map_screen.dart';
 
@@ -41,11 +39,12 @@ class _HomepageState extends State<Homepage> {
             TextButton(
                 onPressed: () {
                   _getLocation(user.uid);
+                  print('get location working');
                 },
                 child: Text('Add Location')),
             TextButton(
                 onPressed: () {
-                  _listenLocation();
+                  _listenLocation(user.uid);
                 },
                 child: Text('Enable Live Location')),
             TextButton(
@@ -119,7 +118,7 @@ class _HomepageState extends State<Homepage> {
     }
   }
 
-  Future<void> _listenLocation() async {
+  Future<void> _listenLocation(String userId) async {
     _locationSubscription = location.onLocationChanged.handleError((onError) {
       print(onError);
       _locationSubscription?.cancel();
@@ -127,7 +126,7 @@ class _HomepageState extends State<Homepage> {
         _locationSubscription = null;
       });
     }).listen((loc.LocationData currentlocation) async {
-      await FirebaseFirestore.instance.collection('location').doc("user1").set({
+      await FirebaseFirestore.instance.collection('location').doc(userId).set({
         'latitude': currentlocation.latitude,
         'longitude': currentlocation.longitude,
         'name': user.displayName,
