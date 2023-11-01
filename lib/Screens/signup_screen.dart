@@ -143,8 +143,8 @@ class SignupScreen extends StatelessWidget {
       User? user = FirebaseAuth.instance.currentUser;
       await user?.updateDisplayName(
           "${firstNameController.text} ${lastNameController.text}");
-      await user?.reload();
-      user = FirebaseAuth.instance.currentUser; // Refresh user data
+      // await user?.reload();
+      // user = FirebaseAuth.instance.currentUser; // Refresh user data
 
       // Print the updated user data
       print("User Name: ${user?.displayName}");

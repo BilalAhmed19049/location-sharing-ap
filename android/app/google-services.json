@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "179917996364",
+    "project_id": "location-sharing-app-8b2ff",
+    "storage_bucket": "location-sharing-app-8b2ff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:179917996364:android:546500d70ee1a704264fe9",
+        "android_client_info": {
+          "package_name": "com.example.location_sharing_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoSq-d_l6U3kyiVJfoelP1-u55x5H3vEE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
